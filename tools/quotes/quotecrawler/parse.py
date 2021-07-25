@@ -12,7 +12,7 @@ def category():
     Returns:
         list: [description]
     """
-    return ["climber-quotes", "mountaineering-quotes", "mountain-quotes", "ski-quotes", "hike-quotes"]
+    return ["climber-quotes", "mountaineering-quotes", "mountain-quotes", "ski-quotes", "hike-quotes", "climbing-quotes"]
 
 
 def quotes(category: str, number_of_quotes: int):
@@ -28,7 +28,7 @@ def quotes(category: str, number_of_quotes: int):
 
     quotes_list = []
 
-    url = "https://www.brainyquote.com/quotes/topics/" + category + ".html"
+    url = "https://www.brainyquote.com/topics/" + category + ".html"
     html = requests.get(url)
     soup = BeautifulSoup(html.text, features="html.parser")
 
@@ -54,12 +54,13 @@ def quotes(category: str, number_of_quotes: int):
                 break
             soup = BeautifulSoup(html.text, features="html.parser")
 
-        div_id = "qpos_" + str(x) + "_" + str(y)
+        div_id = "pos_" + str(x) + "_" + str(y)
         find = soup.find("div", {"id": div_id})
         if find is not None:
-            quote = str(find.text.replace('\n\n\n\n', '\n')).split("\n")
-            quote = Quote(quote[1], quote[2])
-            quotes_list.append(quote)
+            quote = str(find.text.split("\n\n\n", 1)[0]).split("\n")
+            if len(quote) >= 3:
+                quote = Quote(quote[1].replace('"', ''), quote[2].replace('"', ''))
+                quotes_list.append(quote)
 
         n += 1
 
