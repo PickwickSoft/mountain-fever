@@ -12,7 +12,7 @@ def category():
     Returns:
         list: [description]
     """
-    return ["climber-quotes", "mountaineering-quotes", "mountain-quotes", "ski-quotes", "hike-quotes", "climbing-quotes"]
+    return ["climber-quotes", "mountaineering-quotes", "mountain-quotes", "mountain-quotes", "ski-quotes", "hike-quotes", "climbing-quotes"]
 
 
 def quotes(category: str, number_of_quotes: int):
