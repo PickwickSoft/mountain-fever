@@ -25,7 +25,7 @@ public class QuoteEngine {
     @Autowired
     private CurrentQuoteRepository currentQuoteRepository;
 
-    @Scheduled(fixedDelay = 10_000)
+    @Scheduled(fixedDelayString = "${app.quotes.refresh-interval}")
     public void updateQuote() {
         Long currentQuoteID = (long) -1;
         try {
