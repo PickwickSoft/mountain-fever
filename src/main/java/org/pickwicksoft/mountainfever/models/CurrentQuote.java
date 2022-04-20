@@ -1,6 +1,9 @@
 package org.pickwicksoft.mountainfever.models;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "current_quote")

@@ -2,7 +2,10 @@ package org.pickwicksoft.mountainfever.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity(name = "quotes")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})

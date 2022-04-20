@@ -25,27 +25,6 @@ public class QuoteEngine {
     @Autowired
     private CurrentQuoteRepository currentQuoteRepository;
 
-    @Scheduled(fixedDelayString = "${app.quotes.refresh-interval}")
-    public void updateQuote() {
-        Long currentQuoteID = (long) -1;
-        try {
-            currentQuoteID = currentQuoteRepository.findAll().get(0).getId();
-        } catch (Exception ignored) {}
-        List<Long> quotesIDList = quoteRepository.findAll().stream().map(Quote::getQuote_id).toList();
-
-        Long newQuoteID = getRandom(quotesIDList, currentQuoteID);
-
-        updateQuoteByID(currentQuoteID);
-
-        currentQuoteRepository.deleteAll();
-        CurrentQuote newQuote = new CurrentQuote();
-        newQuote.setId(newQuoteID);
-        currentQuoteRepository.saveAndFlush(newQuote);
-
-        Logger logger = Logger.getLogger("");
-        logger.log(new LogRecord(Level.INFO, "Set new current quote"));
-    }
-
     private static Long getRandom(List<Long> list, Long exclude) {
         int rnd = new Random().nextInt(list.size());
         Long newID = list.get(rnd);
@@ -56,10 +35,36 @@ public class QuoteEngine {
         return newID;
     }
 
+    @Scheduled(fixedDelayString = "${app.quotes.refresh-interval}")
+    public void updateQuote() {
+        Long currentQuoteID = (long) -1;
+        try {
+            currentQuoteID = currentQuoteRepository.findAll().get(0).getId();
+        } catch (Exception ignored) {
+        }
+        List<Long> quotesIDList = quoteRepository.findAll().stream().map(Quote::getQuote_id).toList();
+
+        Long newQuoteID = getRandom(quotesIDList, currentQuoteID);
+
+        updateQuoteByID(currentQuoteID);
+
+        CurrentQuote newQuote = new CurrentQuote();
+        newQuote.setId(newQuoteID);
+        setNewCurrentQuote(newQuote);
+
+        Logger logger = Logger.getLogger("");
+        logger.log(new LogRecord(Level.INFO, "Set new current quote"));
+    }
+
+    private void setNewCurrentQuote(CurrentQuote newQuote) {
+        currentQuoteRepository.deleteAll();
+        currentQuoteRepository.saveAndFlush(newQuote);
+    }
+
     private void updateQuoteByID(long id) {
         Quote currentQuote = quoteRepository.getById(id);
         Quote newQuote = new Quote();
-        newQuote.setUsed_times(currentQuote.getUsed_times()+1);
+        newQuote.setUsed_times(currentQuote.getUsed_times() + 1);
         newQuote.setText(currentQuote.getText());
         newQuote.setAuthor_name(currentQuote.getAuthor_name());
         BeanUtils.copyProperties(newQuote, currentQuote, "quote_id");
