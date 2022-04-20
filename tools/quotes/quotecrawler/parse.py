@@ -59,7 +59,8 @@ def quotes(category: str, number_of_quotes: int):
         if find is not None:
             quote = str(find.text.split("\n\n\n", 1)[0]).split("\n")
             if len(quote) >= 3:
-                quote = Quote(quote[1].replace('"', ''), quote[2].replace('"', ''))
+                quote = Quote(quote[1].replace('"', ''),
+                              quote[2].replace('"', ''))
                 quotes_list.append(quote)
 
         n += 1
