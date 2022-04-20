@@ -9,13 +9,16 @@ CREATE TABLE quotes
 
 CREATE TABLE images
 (
-    image_id    SERIAL PRIMARY KEY,
-    image       BYTEA NULL
+    image_id      SERIAL PRIMARY KEY,
+    content_type  varchar(255),
+    name          varchar(255),
+    image         oid
 
 );
 
 CREATE TABLE used_pixabay_images
 (
+    id          SERIAL PRIMARY KEY,
     pixabay_id  varchar(60) NOT NULL
 );
 
