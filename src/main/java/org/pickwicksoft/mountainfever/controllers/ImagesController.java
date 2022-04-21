@@ -80,8 +80,13 @@ public class ImagesController {
                 .body(image.getImage());
     }
 
+    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+    public void deleteQuote(@PathVariable Long id) {
+        imgService.deleteById(id);
+    }
+
     @GetMapping
-    @RequestMapping("/current/")
+    @RequestMapping("/current")
     public ResponseEntity<byte[]> current() {
         if (imgService.getCurrentImage().isPresent()) {
             var currentID = imgService.getCurrentImage().get().getId();

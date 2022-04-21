@@ -89,4 +89,7 @@ public class ImageService {
         return Optional.ofNullable(currentImageService.getCurrentImage());
     }
 
+    public void deleteById(Long id) {
+        imgRepository.deleteById(id);
+    }
 }

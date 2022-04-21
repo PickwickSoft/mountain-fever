@@ -19,7 +19,7 @@ public class QuotesController {
     private CurrentQuoteRepository currentQuoteRepository;
 
     @GetMapping
-    @RequestMapping("/current/")
+    @RequestMapping("/current")
     public Quote current() {
         return quoteRepository.getById(currentQuoteRepository.findAll().get(0).getId());
     }
