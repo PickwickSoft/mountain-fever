@@ -35,7 +35,7 @@ public class QuoteEngine {
         return newID;
     }
 
-    @Scheduled(fixedDelayString = "${app.quotes.refresh-interval}")
+    @Scheduled(cron = "${app.quotes.refresh-interval}")
     public void updateQuote() {
         Long currentQuoteID = (long) -1;
         try {

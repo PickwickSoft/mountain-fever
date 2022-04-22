@@ -24,7 +24,7 @@ public class ImageUpdaterService {
     @Autowired
     private ImageService imgService;
 
-    @Scheduled(fixedDelayString = "${app.images.refresh-interval}")
+    @Scheduled(cron = "${app.images.refresh-interval}")
     public void updateImage() {
         try {
             List<PixabayImage> images = finder.search("mountain");
